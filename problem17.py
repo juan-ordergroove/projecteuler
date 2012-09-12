@@ -34,7 +34,6 @@ def get_tens(i):
     char_sum += len(base_dict.get(tens))
 
     ones = i - tens
-    print i, tens, ones
     if ones > 0: char_sum += len(base_dict.get(ones))
     return char_sum
 
@@ -45,14 +44,13 @@ def get_hundreds(i):
     char_sum += len('hundred')
 
     new_i = i - hundreds*100
-    print 'hundreds:', i, hundreds*100, new_i
     if new_i > 0:
         char_sum += len('and')
-        if new_i > 10: char_sum += get_tens(new_i)
-        else: char_sum += len(base_dict.get(new_i))
+        if base_dict.get(new_i): char_sum += len(base_dict.get(new_i))
+        else: char_sum += get_tens(new_i)
     return char_sum
 
-n = 500
+n = 1000
 char_sum = 0
 for i in range(1, n+1):
     int_len = len(str(i))
@@ -60,5 +58,4 @@ for i in range(1, n+1):
     elif int_len == 2: char_sum += get_tens(i)
     elif int_len == 3: char_sum += get_hundreds(i)
     elif int_len == 4: char_sum += len('onethousand')
-    print i, char_sum
 print char_sum
