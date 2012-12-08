@@ -1,50 +1,57 @@
-''' First 20 output by BruteLexicographicItr:
-123456789 1
-123456798 2
-123456879 3
-123456897 4
-123456978 5
-123456987 6
-123457689 7
-123457698 8
-123457869 9
-123457896 10
-123457968 11
-123457986 12
-123458679 13
-123458697 14
-123458769 15
-123458796 16
-123458967 17
-123458976 18
-123459678 19
-123459687 20'''
+''' First 20 output:
+0123456789 1
+0123456798 2
+0123456879 3
+0123456897 4
+0123456978 5
+0123456987 6
+0123457689 7
+0123457698 8
+0123457869 9
+0123457896 10
+0123457968 11
+0123457986 12
+0123458679 13
+0123458697 14
+0123458769 15
+0123458796 16
+0123458967 17
+0123458976 18
+0123459678 19
+0123459687 20
+'''
 
+import copy
+class TreeLexiCounter(object):
+    
+    def __init__(self, lex_limit):
+        self.solution = None
+        self.p_counter = 0
+        self.lex_limit = lex_limit
+        self.digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        self.d_limit = len(self.digits)
+    
+    def _itr(self, d_pos, used_digits):
+        
+        if d_pos == self.d_limit: self.p_counter+=1
+        if not self.solution and self.p_counter >= self.lex_limit:
+            self.solution = copy.deepcopy(used_digits)
+            return
+        
+        for d in self.digits:
+            if self.solution: return
+            if d in used_digits: continue
 
-# class BruteLexicographicItr(object):
-#     
-#     def __init__(self, lexicographic_limit):
-# 
-#         self.lexi_count = 0
-#         self.num = 123456789
-#         self.digits_arr = [0,1,2,3,4,5,6,7,8,9]
-#         self.lexicographic_limit = lexicographic_limit
-#     
-#     def itr(self):
-#         
-#         while self.lexi_count < self.lexicographic_limit:
-#             b_contains_digits = True
-#             for i in self.digits_arr:
-#                 if i == 0 and self.num < 1000000000: continue
-#                 if str(i) not in str(self.num):
-#                     b_contains_digits = False
-#                     break
-#             
-#             if b_contains_digits:
-#                 self.lexi_count += 1
-#                 print self.num, self.lexi_count
-#             self.num += 1
-# 
-# if __name__ == '__main__':
-#     bli = BruteLexicographicItr(10**6)
-#     bli.itr()
+            used_digits.append(d)
+            self._itr(d_pos+1, used_digits)
+            used_digits.remove(d)
+    
+    def start(self):
+        d_pos = 0
+        used_digits = []
+        self._itr(d_pos, used_digits)
+
+if __name__ == '__main__':
+    tlc = TreeLexiCounter(10**6)
+    tlc.start()
+    print tlc.solution
