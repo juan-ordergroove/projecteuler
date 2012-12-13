@@ -3,8 +3,9 @@ def find_reps(dec):
     for i in xrange(len(dec)-1, d_mid, -1):
         sub = dec[i:]
         new_dec = dec[:len(dec)-len(sub)]
-        print new_dec, sub
-        if new_dec.find(sub) != -1: return len(sub)
+
+        print new_dec, sub, new_dec[len(new_dec)-len(sub):]
+        if sub != '0' and sub == new_dec[len(new_dec)-len(sub):]: return len(sub)
     return 0
 
 def div(d):
@@ -20,12 +21,12 @@ def div(d):
         if curr_reps != 0: return curr_reps
     return 0
 
-reps = div(14)
-print reps
+print div(909)
 # d = 2
 # reps = 0
 # while d < 1000:
 #     new_reps = div(d)
+#     print d, new_reps, float(1)/float(d)
 #     if new_reps > reps:
 #         reps = new_reps
 #         max_d = d
