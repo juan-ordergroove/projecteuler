@@ -1,33 +1,33 @@
-def x(d, reps):
+def find_reps(dec):
+    d_mid = len(dec)/2
+    for i in xrange(len(dec)-1, d_mid, -1):
+        sub = dec[i:]
+        new_dec = dec[:len(dec)-len(sub)]
+        print new_dec, sub
+        if new_dec.find(sub) != -1: return len(sub)
+    return 0
+
+def div(d):
     m = 1
     dec = ''
     while m != 0:
         p = int(str(m)+str('0'))
         n = p/d
-        d_mid = len(dec)/2        
-
-        ldm = (dec and str(n) == dec[-1]) # last digit matches
-        if ldm: return 1
-
         dec += str(n)
-        # print '0.'+dec
         m = p - (n*d)
 
-        for i in xrange(len(dec)-reps-1, d_mid, -1):
-            sub = dec[len(dec)-reps-1:]
-            new_dec = dec[:len(dec)-reps-1]
-            print reps, sub, new_dec
-            if new_dec.find(sub) != -1: return i-1
+        curr_reps = find_reps(dec)
+        if curr_reps != 0: return curr_reps
     return 0
 
-d = 2
-reps = 0
-# reps = max(x(14, reps), reps)
-# print reps
-while d < 1000:
-    new_reps = x(d, reps)
-    if new_reps > reps:
-        reps = new_reps
-        max_d = d
-    d+=1
-print max_d, reps
+reps = div(14)
+print reps
+# d = 2
+# reps = 0
+# while d < 1000:
+#     new_reps = div(d)
+#     if new_reps > reps:
+#         reps = new_reps
+#         max_d = d
+#     d+=1
+# print max_d, reps
