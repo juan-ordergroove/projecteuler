@@ -1,4 +1,4 @@
-def x(d):
+def x(d, reps):
     m = 1
     dec = ''
     while m != 0:
@@ -7,20 +7,27 @@ def x(d):
         d_mid = len(dec)/2        
 
         ldm = (dec and str(n) == dec[-1]) # last digit matches
-        first_part, second_part = dec[:d_mid], dec[d_mid:]        
-
         if ldm: return 1
-        elif (dec and first_part == second_part): return len(first_part)
 
         dec += str(n)
-        print '0.'+dec
+        # print '0.'+dec
         m = p - (n*d)
+
+        for i in xrange(len(dec)-reps-1, d_mid, -1):
+            sub = dec[len(dec)-reps-1:]
+            new_dec = dec[:len(dec)-reps-1]
+            print reps, sub, new_dec
+            if new_dec.find(sub) != -1: return i-1
     return 0
 
 d = 2
 reps = 0
-x(14)
-# while d < 1000:
-#     reps = max(x(d), reps)
-#     d+=1
+# reps = max(x(14, reps), reps)
 # print reps
+while d < 1000:
+    new_reps = x(d, reps)
+    if new_reps > reps:
+        reps = new_reps
+        max_d = d
+    d+=1
+print max_d, reps
